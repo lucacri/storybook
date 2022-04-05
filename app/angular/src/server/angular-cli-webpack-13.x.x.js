@@ -51,12 +51,9 @@ exports.getWebpackConfig = async (baseConfig, { builderOptions, builderContext }
 
   /**
    * Merge baseConfig Webpack with angular-cli Webpack
+   * Keep all entry from angular cli except main. Add storybook entry to man key
    */
-  const entry = [
-    ...baseConfig.entry,
-    ...(cliConfig.entry.styles ?? []),
-    ...(cliConfig.entry.polyfills ?? []),
-  ];
+  const entry = { ...cliConfig.entry, main: baseConfig.entry };
 
   // Don't use storybooks styling rules because we have to use rules created by @angular-devkit/build-angular
   // because @angular-devkit/build-angular created rules have include/exclude for global style files.
